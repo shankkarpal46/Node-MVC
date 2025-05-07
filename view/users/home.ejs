@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <%- include('../link') %>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <% users.forEach(user => { %>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">  
+                        <div class="card-body">
+                          <p class="card-text"><%= user.id %></p>
+                          <h2 class="card-title"><%= user.firstName %></h2>
+                          <h2 class="card-title"><%= user.lastName %></h2>
+                          <p class="card-text"><%= user.email %></p>
+                          <p class="card-text"><%= user.job_Title %></p>
+                          <p class="card-text"><%= user.gender %></p>
+                          <a href="#" class="btn btn-warning m-2">Update</a>
+                          <a href="#" class="btn btn-danger">Delete</a>
+                        </div>
+                      </div>
+                </div>    
+            <% }) %>     
+        </div>
+    </div>
+</body> 
+</html>

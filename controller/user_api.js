@@ -20,7 +20,7 @@ async function getUserByIdHandler(req,res){
 async function updateUserByIdHandler(req,res){
     // To Edit a user with id
 
-    await User.findByIdAndUpdate(req.params.id,{lastName:'Gorivale'}) // updating user information through id.
+    await User.findByIdAndUpdate(req.params.id,{lastName:'Rasal'}) // updating user information through id.
     return res.json({status:"Patch request resolved."})
 }
 
@@ -32,6 +32,10 @@ async function deleteUserByIdHandler(req,res){
 }
 
 
+async function RegisterHandler(req,res){
+    res.render("users/create_user")
+}
+
 async function createUserHandler(req,res){
     const body = req.body
 
@@ -42,11 +46,11 @@ async function createUserHandler(req,res){
 
     const result = await User.create(
         {
-            firstName: body.first_name,
-            lastName: body.last_name,
+            firstName: body.firstName,
+            lastName: body.lastName,
             email: body.email,
             gender: body.gender,
-            job_Title: body.job_title
+            job_Title: body.job_Title
         }
     )
 
@@ -59,5 +63,6 @@ module.exports = {
     getUserByIdHandler,
     updateUserByIdHandler,
     deleteUserByIdHandler,
-    createUserHandler      
+    createUserHandler,
+    RegisterHandler      
 }

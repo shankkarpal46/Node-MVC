@@ -1,12 +1,12 @@
-const fs = require('fs')
+const fs = require('fs') // since file system is used to store data, instead of database .
 
-async function logResReq(filename){
+function logReqRes(filename){
     return (req,res,next) => {
-        fs,appendFile(filename,`\n ${Date.now()}: ${req.method}: ${req.path}`,(err,data)=>{
+        fs.appendFile(filename,`\n ${Date.now()}: ${req.method}: ${req.path}`,(err,data)=>{
             console.log(err)
             next()
         })
     }
 }
 
-module.exports = logResReq
+module.exports = {logReqRes}

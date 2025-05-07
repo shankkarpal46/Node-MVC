@@ -1,8 +1,11 @@
 const express = require('express')
-const fs = require('fs') // since file system is used to store data, instead of database .
-
-const mongoose = require('mongoose')
 const app = express()
+app.use(express.json())
+
+const path = require('path')
+
+const {logReqRes} = require('./middleware/logReqRes.js') 
+
 
 const router_api = require('./router/user_router.js')
 
@@ -10,6 +13,13 @@ const router_html = require('./router/user_router_html.js')
 
 const PORT = 8000
 
+app.set('view engine',"ejs")
+app.set("views",path.resolve("./view"))
+
+app.use(logReqRes("log.txt"))
+
+
+app.use(express.urlencoded({extended: false}))
 app.use("/api/users",router_api)
 
 app.use("/users",router_html)
