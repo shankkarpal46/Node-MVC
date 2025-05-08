@@ -31,11 +31,6 @@ async function deleteUserByIdHandler(req,res){
     return res.json({status:"User deleted."})
 }
 
-
-async function RegisterHandler(req,res){
-    res.render("users/create_user")
-}
-
 async function createUserHandler(req,res){
     const body = req.body
 
@@ -63,6 +58,5 @@ module.exports = {
     getUserByIdHandler,
     updateUserByIdHandler,
     deleteUserByIdHandler,
-    createUserHandler,
-    RegisterHandler      
+    createUserHandler      
 }

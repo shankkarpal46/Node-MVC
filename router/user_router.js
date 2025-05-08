@@ -17,7 +17,6 @@ router_api.use(express.urlencoded({extended:false}))
 router_api.route("/").get(getHandleUsers)
 
 //POST Method
-router_api.route("/register").get(RegisterHandler)
 router_api.route("/create_user").post(createUserHandler)
 
 // fetching user through id.

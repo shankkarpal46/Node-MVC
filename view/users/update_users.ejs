@@ -6,6 +6,18 @@
     <title>Update User</title>
 </head>
 <body>
-    
+    <form action="/api/users/create_user" method="POST">
+        <label for="firstName">Firstname:</label> <input type="text" name="firstName">
+        <br>
+        <label for="lastName">Lastname:</label> <input type="text" name="lastName">
+        <br>
+        <label for="email">Email:</label> <input type="text" name="email">
+        <br>
+        <label for="job_Title">Job Title:</label> <input type="text" name="job_Title">
+        <br>
+        <label for="gender">Gender:</label> <input type="text" name="gender">
+        <br>
+        <input type="submit" value="submit">
+    </form>
 </body>
 </html>
