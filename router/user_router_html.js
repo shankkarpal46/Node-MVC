@@ -39,6 +39,6 @@ router_html.route("/updating_user/:id").post(updateUserByIdHandler)
 
 // deleting user through id.
 router_html.route("/delete_user/:id").get(User_DeleteView)
-router_html.route("/deleting_user/:id").delete(deleteUserByIdHandler)
+router_html.route("/deleting_user/:id").post(deleteUserByIdHandler)
 
 module.exports = router_html

@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete User</title>
+    <title>User DeleteView</title>
+    <%- include('../link') %>
 </head>
 <body>
+    <h1>Do you want to delete the user?</h1>
+    <form action="/users/deleting_user/<%= uid %>" method="POST">
+        
+        <input type="submit" value="Delete" class="bg-danger border-dark p-2 w-25 m-3">
     
+    </form>
 </body>
 </html>
