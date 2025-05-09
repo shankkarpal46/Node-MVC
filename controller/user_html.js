@@ -25,18 +25,40 @@ async function getUserByIdHandler(req,res){
     return res.json(user)
 }
 
+
+async function User_UpdateView(req,res){
+    const id = await User.findById(req.params.id)
+    res.render("users/update_user",{uid:id})
+}
+
+
 async function updateUserByIdHandler(req,res){
     // To Edit a user with id
 
-    await User.findByIdAndUpdate(req.params.id,{lastName:'Rasal'}) // updating user information through id.
-    return res.json({status:"Patch request resolved."})
+    await User.findByIdAndUpdate(req.params.id,{
+        firstName:req.body.firstName,    
+        lastName:req.body.lastName,
+        email:req.body.email,
+        job_Title:req.body.job_Title,
+        gender:req.body.gender
+        }) // updating user information through id.
+    // return res.json({status:"Patch request resolved."})
+
+    const allDbUsers = await User.find({})
+    res.render("users/home",{users:allDbUsers})
+}
+
+async function User_DeleteView(req,res){
+    return res.render("users/delete_user")
 }
 
 async function deleteUserByIdHandler(req,res){
     // To Delete a user with id
 
     await User.findByIdAndDelete(req.params.id) // deleting user information through id.
-    return res.json({status:"User deleted."})
+    // return res.json({status:"User deleted."})
+
+    return res.render("users/delete_user")
 }
 
 
@@ -75,5 +97,7 @@ module.exports = {
         updateUserByIdHandler,
         deleteUserByIdHandler,
         createUserHandler,
-        RegisterHandler
+        RegisterHandler,
+        User_UpdateView,
+        User_DeleteView
     }  

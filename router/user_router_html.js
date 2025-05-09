@@ -1,12 +1,16 @@
 const express = require('express')
 const router_html = express.Router()
+const methodOverride = require('method-override');
+router_html.use(methodOverride('_method'))
 const {
     getUserhHandler,
     getUserByIdHandler,
     updateUserByIdHandler,
     deleteUserByIdHandler,
     createUserHandler,
-    RegisterHandler
+    RegisterHandler,
+    User_UpdateView,
+    User_DeleteView
     } = require('../controller/user_html')
 
 // GET /users - HTML Document Render 
@@ -30,9 +34,11 @@ router_html.route("/create_user").post(createUserHandler)
 router_html.route("/:id").get(getUserByIdHandler)
 
 // updating user through id.
-router_html.route("/update_user/:id").patch(updateUserByIdHandler)
+router_html.route("/update_user/:id").get(User_UpdateView)
+router_html.route("/updating_user/:id").post(updateUserByIdHandler)
 
 // deleting user through id.
-router_html.route("/delete_user/:id").delete(deleteUserByIdHandler)
+router_html.route("/delete_user/:id").get(User_DeleteView)
+router_html.route("/deleting_user/:id").delete(deleteUserByIdHandler)
 
 module.exports = router_html
