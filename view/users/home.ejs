@@ -12,7 +12,7 @@
             <% users.forEach(user => { %>
                 <div class="col-4">
                     <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">  
+                        <img src="/uploads/<%= user.profileimage %>" class="card-img-top" alt="...">  
                         <div class="card-body">
                           <p class="card-text"><%= user.id %></p>
                           <a href="/users/user_details/<%= user.id %>"><h2 class="card-title"><%= user.firstName %> <%= user.lastName %></h2></a>

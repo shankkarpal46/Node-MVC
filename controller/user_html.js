@@ -39,11 +39,11 @@ async function updateUserByIdHandler(req,res){
         firstName:req.body.firstName,    
         lastName:req.body.lastName,
         email:req.body.email,
+        profileimage:req.file,
         job_Title:req.body.job_Title,
         gender:req.body.gender
         }) // updating user information through id.
-    // return res.json({status:"Patch request resolved."})
-
+    
     const allDbUsers = await User.find({})
     res.render("users/home",{users:allDbUsers})
 }
@@ -64,10 +64,9 @@ async function deleteUserByIdHandler(req,res){
     await User.findByIdAndDelete(req.params.id) // deleting user information through id.
 
     allDbUsers = await User.find({})
-    
+
     res.redirect("/users")
 }
-
 
 async function RegisterHandler(req,res){
     res.render("users/create_user")
@@ -88,6 +87,9 @@ async function createUserHandler(req,res){
         return res.status(400).send('No file uploaded or invalid file type.')
     }
     else{
+        if(!body || !body.first_name || !body.last_name || !body.email || !body.gender || !body.job_title){
+            return res.status(400).json({msg:"All field are required."})
+        }
         console.log(req)
         console.log(req.file)
 
