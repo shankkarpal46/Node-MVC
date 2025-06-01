@@ -1,10 +1,11 @@
 const express = require('express')
 const router_html = express.Router()
-const methodOverride = require('method-override');
-router_html.use(methodOverride('_method'))
+const multer = require('multer')
+let upload = multer({dest:'uploads/'})
+
 const {
     getUserhHandler,
-    getUserByIdHandler,
+    getUserDetailByIdHandler,
     updateUserByIdHandler,
     deleteUserByIdHandler,
     createUserHandler,
@@ -13,29 +14,42 @@ const {
     User_DeleteView
     } = require('../controller/user_html')
 
+const storage = multer.diskStorage({
+    destination: function(req,file,cb){
+        cb(null,'./uploads')
+    },
+
+    filename: function(req,file,cb){
+        cb(null,file.originalname)
+    }
+})
+
+upload = multer({storage:storage})
+
 // GET /users - HTML Document Render 
 router_html.route("/").get(getUserhHandler)
 
-const {
-    
-} = require('../controller/user_api.js')
-
 // Middleware used to extract data from the body, else it would be undefined. 
-router_html.use(express.urlencoded({extended:false}))
+
 
 // GET /api/users - List all users
 router_html.route("/").get(getUserhHandler)
 
+router_html.use('/uploads',express.static('uploads'))
+router_html.use(express.urlencoded({extended:false}))
 //POST Method
 router_html.route("/register").get(RegisterHandler)
-router_html.route("/create_user").post(createUserHandler)
+router_html.route("/create_user").post(upload.single('profileimage'),createUserHandler)
+
 
 // fetching user through id.
-router_html.route("/:id").get(getUserByIdHandler)
+router_html.route("/user_details/:id").get(getUserDetailByIdHandler)
+
 
 // updating user through id.
 router_html.route("/update_user/:id").get(User_UpdateView)
 router_html.route("/updating_user/:id").post(updateUserByIdHandler)
+
 
 // deleting user through id.
 router_html.route("/delete_user/:id").get(User_DeleteView)

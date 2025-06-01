@@ -1,5 +1,6 @@
 const express = require('express')
 const User = require('../model/user_model.js')
+const multer = require('multer')
 
 // GET /users - HTML Document Render 
 async function getUserhHandler(req,res) {
@@ -14,7 +15,7 @@ async function getUserhHandler(req,res) {
 }
  
 
-async function getUserByIdHandler(req,res){
+async function getUserDetailByIdHandler(req,res){
     // Server Error Response (500 Status Code)
     // const user = users.find(user => user[0].id === id)
     const user = await User.findById(req.params.id)
@@ -22,9 +23,8 @@ async function getUserByIdHandler(req,res){
     // Client Error Response 
     if(!user) return res.status(404).json({error:'User not found!...'})
     
-    return res.json(user)
+    return res.render("users/user_details",{user:user})
 }
-
 
 async function User_UpdateView(req,res){
     const id = await User.findById(req.params.id)
@@ -70,32 +70,42 @@ async function RegisterHandler(req,res){
 
 async function createUserHandler(req,res){
     const body = req.body
-    
+
+    const file = req.file.originalname
+
     // To check whether all fields are entered properly or not.
     // if(!body || !body.first_name || !body.last_name || !body.email || !body.gender || !body.job_title){
     //     return res.status(400).json({msg:"All fields are required."})
     // }
 
     // To Create a user.
-    const result = await User.create(
-        {
-            firstName: body.firstName,
-            lastName: body.lastName,
-            email: body.email,
-            gender: body.gender,
-            job_Title: body.job_Title
-        }
-    )
+    if(!req.file){
+        return res.status(400).send('No file uploaded or invalid file type.')
+    }
+    else{
+        console.log(req)
+        console.log(req.file)
 
-    console.log("Result"+result)
-    const allDbUsers = await User.find({})
-    // return res.status(201).json({msg:"Success"})
-    return res.render("users/home",{users:allDbUsers})
+        const result = await User.create(
+            {
+                firstName: body.firstName,
+                lastName: body.lastName,
+                email: body.email,
+                profileimage:file,
+                gender: body.gender,
+                job_Title: body.job_Title
+            }
+        )
+
+        console.log("Result" + result)
+        // return res.status(201).json({msg:"Success"})
+        res.redirect("/users")
+    }
 }
 
 module.exports = {
         getUserhHandler,
-        getUserByIdHandler,
+        getUserDetailByIdHandler,
         updateUserByIdHandler,
         deleteUserByIdHandler,
         createUserHandler,

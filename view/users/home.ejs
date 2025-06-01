@@ -15,8 +15,8 @@
                         <img src="..." class="card-img-top" alt="...">  
                         <div class="card-body">
                           <p class="card-text"><%= user.id %></p>
-                          <h2 class="card-title"><%= user.firstName %></h2>
-                          <h2 class="card-title"><%= user.lastName %></h2>
+                          <a href="/users/user_details/<%= user.id %>"><h2 class="card-title"><%= user.firstName %> <%= user.lastName %></h2></a>
+                          <!-- <h2 class="card-title"></h2> -->
                           <p class="card-text"><%= user.email %></p>
                           <p class="card-text"><%= user.job_Title %></p>
                           <p class="card-text"><%= user.gender %></p>

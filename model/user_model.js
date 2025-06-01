@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
 
+    profileimage:{
+        type: String
+    },
+
     job_Title:{
         type: String
     },
