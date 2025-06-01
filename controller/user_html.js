@@ -49,18 +49,23 @@ async function updateUserByIdHandler(req,res){
 }
 
 async function User_DeleteView(req,res){
-    const id = req.params.id
-    return res.render("users/delete_user",{uid:id})
+    const id = req.params.id   
+    const user = await User.findById(id)
+
+    // Client Error Response 
+    if(!user) return res.status(404).json({error:'User not found!...'})
+    
+    return res.render("users/delete_user",{uid:id,user:user})
 }
 
 async function deleteUserByIdHandler(req,res){
     // To Delete a user with id
 
     await User.findByIdAndDelete(req.params.id) // deleting user information through id.
-    // return res.json({status:"User deleted."})
-    allDbUsers = await User.find({})
 
-    return res.render("users/home",{users:allDbUsers})
+    allDbUsers = await User.find({})
+    
+    res.redirect("/users")
 }
 
 

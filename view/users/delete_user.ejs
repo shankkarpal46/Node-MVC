@@ -7,11 +7,12 @@
     <%- include('../link') %>
 </head>
 <body>
+    <%- include('../card_detail') %>
     <h1>Do you want to delete the user?</h1>
+
     <form action="/users/deleting_user/<%= uid %>" method="POST">
         
         <input type="submit" value="Delete" class="bg-danger border-dark p-2 w-25 m-3">
-    
     </form>
 </body>
 </html>
