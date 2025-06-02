@@ -27,23 +27,32 @@ async function getUserDetailByIdHandler(req,res){
 }
 
 async function User_UpdateView(req,res){
-    const id = await User.findById(req.params.id)
-    res.render("users/update_user",{uid:id})
+    const user = await User.findById(req.params.id)
+    res.render("users/update_user",{user:user})
 }
 
 
 async function updateUserByIdHandler(req,res){
     // To Edit a user with id
 
-    await User.findByIdAndUpdate(req.params.id,{
+    console.log(req.body)
+    console.log(req.file)
+    const updatedData = await User.findByIdAndUpdate(req.params.id,{
         firstName:req.body.firstName,    
         lastName:req.body.lastName,
         email:req.body.email,
-        profileimage:req.file,
+        profileimage:req.file.originalname,
         job_Title:req.body.job_Title,
         gender:req.body.gender
-        }) // updating user information through id.
+    },// updating user information through id.
+    {
+        new:true
+    })// to check whether the data is updated or not. 
     
+    if (!updatedData){
+        return res.status(404).send('User not found.')
+    }
+
     const allDbUsers = await User.find({})
     res.render("users/home",{users:allDbUsers})
 }
@@ -77,16 +86,12 @@ async function createUserHandler(req,res){
 
     const file = req.file.originalname
 
-    // To check whether all fields are entered properly or not.
-    // if(!body || !body.first_name || !body.last_name || !body.email || !body.gender || !body.job_title){
-    //     return res.status(400).json({msg:"All fields are required."})
-    // }
-
     // To Create a user.
     if(!req.file){
         return res.status(400).send('No file uploaded or invalid file type.')
     }
     else{
+        // To check whether all fields are entered properly or not.
         if(!body || !body.first_name || !body.last_name || !body.email || !body.gender || !body.job_title){
             return res.status(400).json({msg:"All field are required."})
         }

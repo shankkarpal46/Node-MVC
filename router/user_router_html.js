@@ -35,8 +35,7 @@ router_html.route("/").get(getUserhHandler)
 // GET /api/users - List all users
 router_html.route("/").get(getUserhHandler)
 
-router_html.use('/uploads',express.static('uploads'))
-router_html.use(express.urlencoded({extended:false}))
+
 //POST Method
 router_html.route("/register").get(RegisterHandler)
 router_html.route("/create_user").post(upload.single('profileimage'),createUserHandler)
@@ -48,7 +47,7 @@ router_html.route("/user_details/:id").get(getUserDetailByIdHandler)
 
 // updating user through id.
 router_html.route("/update_user/:id").get(User_UpdateView)
-router_html.route("/updating_user/:id").post(updateUserByIdHandler)
+router_html.route("/updating_user/:id").post(upload.single('profileimage'),updateUserByIdHandler)
 
 
 // deleting user through id.
